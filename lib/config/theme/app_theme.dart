@@ -29,8 +29,8 @@ class AppTheme {
 
   ThemeData getThemeData() => ThemeData(
     colorSchemeSeed: colorList[selectedColor],
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.orange,
+    appBarTheme: AppBarTheme(
+      backgroundColor: colorList[selectedColor],
       elevation: 6,
       shadowColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.black),
