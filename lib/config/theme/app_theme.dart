@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const List<Color> colorList = [
+const List<Color> appColorList = [
   Colors.red,
   Colors.blue,
   Colors.green,
@@ -23,14 +23,16 @@ const List<Color> colorList = [
 
 class AppTheme {
   final int selectedColor;
+  final Brightness brightness;
 
-  AppTheme({this.selectedColor = 0})
-    : assert(selectedColor >= 0 && selectedColor < colorList.length);
+  AppTheme({this.selectedColor = 0, this.brightness = Brightness.light})
+    : assert(selectedColor >= 0 && selectedColor < appColorList.length);
 
   ThemeData getThemeData() => ThemeData(
-    colorSchemeSeed: colorList[selectedColor],
+    brightness: brightness,
+    colorSchemeSeed: appColorList[selectedColor],
     appBarTheme: AppBarTheme(
-      backgroundColor: colorList[selectedColor],
+      //backgroundColor: colorList[selectedColor],
       elevation: 6,
       shadowColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.black),
