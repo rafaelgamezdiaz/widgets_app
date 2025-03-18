@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgets_app/providers/theme_provider.dart';
 
 class ThemeChangerScreen extends ConsumerWidget {
@@ -9,7 +10,10 @@ class ThemeChangerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isDarkMode = ref.watch(widgetAppThemeProvider);
+    final brightness = ref.watch(themeNotifierProvider).brightness;
+    final isDarkMode = brightness == Brightness.dark;
+    //final bool isDarkMode = ref.watch(widgetAppThemeProvider);
+    // final theme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -21,12 +25,19 @@ class ThemeChangerScreen extends ConsumerWidget {
               color: Colors.primaries[0],
             ),
             onPressed: () {
-              ref.read(widgetAppThemeProvider.notifier).changeTheme();
+              ref.read(themeNotifierProvider.notifier).toggleDarkMode();
+              // ref.read(widgetAppThemeProvider.notifier).changeTheme();
             },
           ),
         ],
       ),
       body: _ThemeChangerView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pop();
+        },
+        child: Icon(Icons.arrow_back),
+      ),
     );
   }
 }
@@ -36,7 +47,9 @@ class _ThemeChangerView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Color> colors = ref.watch(colorListProvider);
     // final int selectedColor = ref.watch(selectedColorProvider);
-    final int selectedColor = ref.watch(selectedColorNotifierProvider);
+    // final int selectedColor = ref.watch(selectedColorNotifierProvider);
+    final int selectedColor = ref.watch(themeNotifierProvider).selectedColor;
+
     return ListView.builder(
       itemCount: colors.length,
       itemBuilder: (context, index) {
@@ -50,8 +63,12 @@ class _ThemeChangerView extends ConsumerWidget {
             groupValue: selectedColor,
             onChanged: (value) {
               ref
-                  .read(selectedColorNotifierProvider.notifier)
-                  .changeSelectedColor(value);
+                  .read(themeNotifierProvider.notifier)
+                  .changeAppSelectedColor(value);
+
+              // ref
+              // .read(selectedColorNotifierProvider.notifier)
+              // .changeSelectedColor(value);
             },
           ),
         );

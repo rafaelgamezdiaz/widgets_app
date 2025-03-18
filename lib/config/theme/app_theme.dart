@@ -38,4 +38,11 @@ class AppTheme {
       iconTheme: IconThemeData(color: Colors.black),
     ),
   );
+
+  AppTheme copyWith({int? selectedColor, Brightness? brightness}) {
+    return AppTheme(
+      selectedColor: selectedColor ?? this.selectedColor,
+      brightness: brightness ?? this.brightness,
+    );
+  }
 }
